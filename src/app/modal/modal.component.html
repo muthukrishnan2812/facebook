@@ -1,0 +1,40 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Launch demo modal
+</button>
+<div>{{ todo?.body }}</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Create post</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex">
+                    <img src="assets/images/profile-pic.png" alt="">
+                    <p class="my-1 mx-3">Muthu krishnan</p>
+                </div>
+                <input type="text" class="form-control my-3" placeholder="What's on your mind, Muthu?" [(ngModel)]="body" name="body">
+                <div class="post">
+                    <p>Add to your post</p>
+                    <i class="bi bi-image text-success"></i>
+                    <i class="bi bi-person text-primary"></i>
+                    <i class="bi bi-emoji-grin text-warning"></i>
+                    <i class="bi bi-geo-alt-fill text-danger"></i>
+                    <i class="bi bi-file-earmark-gif text-success"></i>
+                    <i class="bi bi-three-dots"></i>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <form (ngSubmit)="postData()">
+                    <button type="submit" class="btn btn-primary">Post</button>
+                </form>
+                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+            </div>
+        </div>
+    </div>
+</div>

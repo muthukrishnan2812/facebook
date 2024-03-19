@@ -1,0 +1,112 @@
+<div class="center">
+    <div class="story">
+        <div class="card-top my-3">
+            <img src="assets/images/status-1.png" alt="story post" class="img">
+            <div>
+                <i class="bi bi-plus-circle itag"></i>
+                <p class="label">Create story</p>
+            </div>
+        </div>
+        <div class="card-top my-3">
+            <img src="assets/images/status-2.png" alt="story post" class="img">
+            <div>
+                <img src="assets/images/member-1.png" alt="" class="logo">
+                <p class="label">Ajith Kumar</p>
+            </div>
+        </div>
+        <div class="card-top my-3">
+            <img src="assets/images/status-3.png" alt="story post" class="img">
+            <div>
+                <img src="assets/images/member-2.png" alt="" class="logo">
+                <p class="label">Rajini Kanth</p>
+            </div>
+        </div>
+        <div class="card-top my-3">
+            <img src="assets/images/status-4.png" alt="story post" class="img">
+            <div>
+                <img src="assets/images/member-5.png" alt="" class="logo">
+                <p class="label">keerthy suresh</p>
+            </div>
+        </div>
+    </div>
+    <div class="story-2">
+        <div class="story_update">
+            <div class="d-flex">
+                <img src="assets/images/profile-pic.png" alt="">
+                <input type="text" class="form-control" placeholder="what's on your mind, Muthu?" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">
+                <hr>
+            </div>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Create post</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="d-flex">
+                                <img src="assets/images/profile-pic.png" alt="">
+                                <p class="my-1 mx-3">Muthu krishnan</p>
+                            </div>
+                            <input type="text" class="form-control my-3" placeholder="What's on your mind, Muthu?"
+                                [(ngModel)]="body" name="body">
+                            <div class="post">
+                                <p>Add to your post</p>
+                                <i class="bi bi-image text-success"></i>
+                                <i class="bi bi-person text-primary"></i>
+                                <i class="bi bi-emoji-grin text-warning"></i>
+                                <i class="bi bi-geo-alt-fill text-danger"></i>
+                                <i class="bi bi-file-earmark-gif text-success"></i>
+                                <i class="bi bi-three-dots"></i>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <form (ngSubmit)="postData()">
+                                <button type="submit" class="btn btn-primary">Post</button>
+                            </form>
+                            <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <span class="mx-5"><i class="bi bi-camera-video" style="color: red;"></i> <b>
+                        Video</b></span>
+                <span class="mx-3"><i class="bi bi-image" style="color: mediumseagreen;"></i><b>
+                        photo/video</b></span>
+                <span class="mx-3"><i class="bi bi-emoji-grin text-warning"></i> <b>
+                        Feeling/activity</b></span>
+            </div>
+        </div>
+        <div class="firstPost my-3">
+            <div class="d-flex my-3 mx-3 userProfile">
+                
+                <img src="assets/images/profile-pic.png" alt="" class="postImg">
+                <div class="mx-3">
+                    <h6>Muthu krishnan</h6>
+                    <span>{{today | date }}</span>
+                </div>
+                <div class="ii">
+                <i class="bi bi-three-dots tex-dark i " style="font-size: 20px;"></i>
+                <i class="bi bi-x-square text-dark i " style="font-size: 20px;"></i>
+                </div>
+
+            </div>
+            
+            <div>
+                <h5>{{ todo?.body }}</h5>
+            </div>
+            <hr>
+            <div style="justify-content: space-around;font-size: 15px;display: flex;">
+                <i class="bi bi-hand-thumbs-up i "> Like</i>
+                <i class="bi bi-chat i "> Command</i>
+                <i class="bi bi-share i"> Share</i>
+            </div>
+            <hr>
+        </div>
+
+    </div>
+
+</div>

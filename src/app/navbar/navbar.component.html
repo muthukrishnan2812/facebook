@@ -1,0 +1,77 @@
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="/assets/images/facebook.png" alt="" class="logo"></a>
+        <div class=" navbar-brand dropdown d-flex align-items-center col">
+            <form class="d-flex position-relative" role="search">
+                <i class="bi bi-search search" [style.visibility]="searchInput ? 'hidden' : 'visible'"></i>
+                <input class="form-control me-6" #searchInputRef (input)="onInputChange(searchInputRef.value)"
+                    placeholder="        Search" data-bs-toggle="dropdown" aria-expanded="false">
+                <ul class="dropdown-menu">
+                    <li>
+                        <div class="alert alert-light alert-dismissible fade show d-flex align-items-center"
+                            role="alert">
+                            <img src="https://source.unsplash.com/random/1" alt="">
+                            <p>Muthu krishnan </p>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="alert alert-light alert-dismissible fade show d-flex align-items-center"
+                            role="alert">
+                            <img src="https://source.unsplash.com/random/1" alt="">
+                            <p>Muthu krishnan </p>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="alert alert-light alert-dismissible fade show d-flex align-items-center"
+                            role="alert">
+                            <img src="https://source.unsplash.com/random/1" alt="">
+                            <p>Muthu krishnan </p>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </li>
+                </ul>
+            </form>
+
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="col">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-3">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page"><i class="bi bi-house-door mx-3"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"><i class="bi bi-play-btn mx-3"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"><i class="bi bi-shop-window mx-3"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"><i class="bi bi-person-circle mx-3"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"><i class="bi bi-controller mx-3"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col">
+                <ul class="navbar-nav me-auto justify-content-end">
+                    <li class=" nav-circle"><button class="btn"><i class="bi bi-dice-6"></i></button></li>
+                    <li class="nav-circle"><button class="btn"><i class="bi bi-messenger"></i></button></li>
+                    <li class=" nav-circle"><button class="btn"><i class="bi bi-bell-fill"></i></button></li>
+                    <li class="nav-circle">
+                        <div class="nav-user-icon">
+                            <img src="assets/images/profile-pic.png" alt="">
+                        </div>
+                    </li>
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</nav>

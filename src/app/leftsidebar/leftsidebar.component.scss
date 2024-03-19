@@ -1,0 +1,86 @@
+// img{
+//     width: 100%;
+// }
+.nav-user-icon img {
+    width: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 30px;
+    margin-top: 10px
+}
+
+.cl1 .col-6 {
+    background-color: #efefef;
+}
+
+i {
+    font-size: 30px;
+}
+
+.font {
+    font-size: 15px;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.clr {
+    color: #2e81f4;
+}
+
+// .sidebar{
+//     padding: 10px;
+// }
+.leftbar {
+    width: 100%;
+    height: 92vh;
+    overflow: hidden;
+    overflow-y: scroll;
+    background-color: #f5f5f5;
+    padding: 20px 6px 5px 10px;
+    position: relative;
+}
+
+.leftbar::-webkit-scrollbar {
+    width: 7px;
+}
+
+.leftbar::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background: #f5f5f5;
+}
+
+.leftbar::-webkit-scrollbar-thumb:hover {
+    background-color: #cccccc;
+}
+
+.leftbar hr {
+    width: 100%;
+    height: 1px;
+    border: 0;
+    background-color: #cccccc;
+    margin: 10px 0;
+}
+
+.leftbar h2 {
+    color: #919191;
+    font-size: 15px;
+    margin: 5px 0;
+}
+
+.leftbar .edit {
+    color: #45abff;
+    font-size: 15px;
+    cursor: pointer;
+    margin-left: 210px;
+    opacity: 0;
+}
+
+.leftbar:hover .edit {
+    opacity: 1;
+}
+
+.game {
+    border-radius: 20px;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
