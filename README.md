@@ -1,6 +1,12 @@
 # Facebook
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.1.
+#navbar
+![Screenshot from 2024-03-19 12-09-11](https://github.com/muthukrishnan2812/facebook/assets/130547095/4729d082-6a4a-4d10-a656-30e4f45b5b5d)
+#dashboard page
+![Screenshot from 2024-03-19 12-09-32](https://github.com/muthukrishnan2812/facebook/assets/130547095/94808969-264e-4238-a4e7-9843497fa47f)
+
+
 
 ## Development server
 
