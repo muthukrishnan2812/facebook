@@ -7,7 +7,12 @@ import { Component } from '@angular/core';
 })
 export class NavbarComponent {
   searchInput:string='';
+  isActive: boolean = true;
+
   onInputChange(value: string) {
     this.searchInput = value.trim();
+  }
+  toggleActive() {
+    this.isActive = !this.isActive;
   }
 }

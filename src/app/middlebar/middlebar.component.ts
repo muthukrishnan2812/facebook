@@ -9,6 +9,7 @@ import { Component, OnInit,EventEmitter,Output } from '@angular/core';
 export class MiddlebarComponent implements OnInit{
 body:any
 todo:any
+image:any
 title:string=''
 data:any[]=[]
 isVisible:any
@@ -16,7 +17,7 @@ today:any=new Date();
 constructor(private http:HttpClient){}
 ngOnInit(): void {
   this.getData();
-  
+  this.getImage();
 }
 
 
@@ -34,6 +35,13 @@ postData(){
   .subscribe(data=>{
     console.log(data);
     this.todo=data;
+  })
+ }
+ getImage(){
+  return this.http.get(`https://source.unsplash.com/random/`)
+  .subscribe(data=>{
+    console.log(data);
+    // this.image=data;
   })
  }
  close(): void {

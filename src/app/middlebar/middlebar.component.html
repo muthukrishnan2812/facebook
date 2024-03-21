@@ -3,8 +3,8 @@
         <div class="card-top my-3">
             <img src="assets/images/status-1.png" alt="story post" class="img">
             <div>
-                <i class="bi bi-plus-circle itag"></i>
-                <p class="label">Create story</p>
+               <label for="imageInput"> <i class="bi bi-plus-circle itag"></i></label>
+                <p class="label" style="margin-top: -48px;">Create story</p>
             </div>
         </div>
         <div class="card-top my-3">
@@ -54,12 +54,19 @@
                                 [(ngModel)]="body" name="body">
                             <div class="post">
                                 <p>Add to your post</p>
-                                <i class="bi bi-image text-success"></i>
-                                <i class="bi bi-person text-primary"></i>
-                                <i class="bi bi-emoji-grin text-warning"></i>
-                                <i class="bi bi-geo-alt-fill text-danger"></i>
-                                <i class="bi bi-file-earmark-gif text-success"></i>
-                                <i class="bi bi-three-dots"></i>
+                                <!-- Hidden file input -->
+                                <input type="file" id="imageInput" style="display: none;">
+                                <input type="file" id="videoInput" style="display: none;" accept="video/*">
+
+                                <!-- Label styled as an icon -->
+                                <label for="imageInput">
+                                    <i class="bi bi-image text-success"></i>
+                                </label>
+                                <span><i class="bi bi-person text-primary"></i></span>
+                                <span><i class="bi bi-emoji-grin text-warning"></i></span>
+                                <span> <i class="bi bi-geo-alt-fill text-danger"></i></span>
+                                <span><i class="bi bi-file-earmark-gif text-success"></i></span>
+                                <span><i class="bi bi-three-dots"></i></span>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -72,10 +79,16 @@
                 </div>
             </div>
             <div class="post">
-                <span class="mx-5"><i class="bi bi-camera-video" style="color: red;"></i> <b>
-                        Video</b></span>
-                <span class="mx-3"><i class="bi bi-image" style="color: mediumseagreen;"></i><b>
-                        photo/video</b></span>
+                <span class="mx-5">
+                    <label for="videoInput">
+                        <i class="bi bi-camera-video" style="color: red;"></i> <b>
+                            Video</b></label>
+                </span>
+                <span class="mx-3">
+                    <label for="imageInput">
+                        <i class="bi bi-image" style="color: mediumseagreen;"></i><b>
+                            photo/video</b></label>
+                </span>
                 <span class="mx-3"><i class="bi bi-emoji-grin text-warning"></i> <b>
                         Feeling/activity</b></span>
             </div>
@@ -85,10 +98,10 @@
 
                 <img src="assets/images/profile-pic.png" alt="" class="postImg">
                 <div class="mx-3">
-                    <h6>Muthu krishnan</h6>
+                    <h6 style="width: 100%;">Muthu krishnan</h6>
                     <span>{{today | date }}</span>
                 </div>
-                <div class="ii">
+                <div class="">
                     <i class="bi bi-three-dots tex-dark i " style="font-size: 20px;"></i>
                     <i class="bi bi-x-square text-dark i " style="font-size: 20px;" (click)="close()"></i>
                 </div>
@@ -114,7 +127,7 @@
                         <h6>{{todos.title}}</h6>
                         <span>{{today | date }}</span>
                     </div>
-                    <div class="ii">
+                    <div class="">
                         <i class="bi bi-three-dots tex-dark i " style="font-size: 20px;"></i>
                         <i class="bi bi-x-square text-dark i " style="font-size: 20px;"></i>
                     </div>
@@ -122,6 +135,8 @@
 
                 <div>
                     <h5>{{ todos.body }}</h5>
+                    <img src="https://source.unsplash.com/random/" alt="" class="postImage">
+
                 </div>
                 <hr>
                 <div style="justify-content: space-around;font-size: 15px;display: flex;">

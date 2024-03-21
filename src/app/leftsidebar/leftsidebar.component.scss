@@ -31,7 +31,7 @@ i {
 // }
 .leftbar {
     width: 100%;
-    height: 92vh;
+    // height: 100%;
     overflow: hidden;
     overflow-y: scroll;
     background-color: #f5f5f5;
@@ -83,6 +83,20 @@ i {
     width: 40px;
     height: 40px;
     object-fit: cover;
+}
+.accordion{
+    width: 100%;
+    margin-left: -10px;
+}
+.heart{
+    width: 40px;
+    height: 40px;
+}
+.violet{
+    color: #6f42c1;
+}
+.teal{
+    color:  #38B2AC;
 }
 @media (max-width:800px) {
     .leftbar{
