@@ -65,6 +65,9 @@
     margin-left: 10px;
     width: 50px;
 }
+.btn-size{
+    width: 62vh;
+}
 
 .col-6 {
     background-color: #efefef;
@@ -77,7 +80,7 @@
     border-radius: 10px;
 
     // height: 50px;
-    input {
+    .input {
         width: 88%;
         height: 35px;
         /* margin-top: 2rem; */
@@ -86,7 +89,7 @@
         background-color: #efefef;
     }
 
-    img {
+    .imgg {
         height: 40px;
         width: 40px;
         border-radius: 50%;
@@ -178,6 +181,7 @@
     .postImage{
         height: 526px;
         width: 526px;
+        margin: 1rem;
     }
 }
 

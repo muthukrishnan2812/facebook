@@ -7,10 +7,10 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ModalComponent } from './modal/modal.component';
 
 const routes: Routes = [
-  {
-    path:"",
-    component:DashboardComponent
-  },
+  // {
+  //   path:"",
+  //   component:AppComponent
+  // },
   {
     path:"register",
     component:RegisterComponent
@@ -19,10 +19,10 @@ const routes: Routes = [
     path:"dashboard",
     component:DashboardComponent
   },
-  {
-    path:"navbar",
-    component:NavbarComponent
-  },
+  // {
+  //   path:"navbar",
+  //   component:NavbarComponent
+  // },
   {
     path:"modal",
     component:ModalComponent

@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class NavbarComponent {
   searchInput:string='';
-  isActive: boolean = true;
+  isActive: boolean = false;
 
   onInputChange(value: string) {
     this.searchInput = value.trim();
