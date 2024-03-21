@@ -9,7 +9,7 @@ import { ModalComponent } from './modal/modal.component';
 const routes: Routes = [
   {
     path:"",
-    component:AppComponent
+    component:DashboardComponent
   },
   {
     path:"register",
