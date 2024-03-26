@@ -12,7 +12,12 @@ import { LeftsidebarComponent } from './leftsidebar/leftsidebar.component';
 import { MiddlebarComponent } from './middlebar/middlebar.component';
 import { RightsidebarComponent } from './rightsidebar/rightsidebar.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-
+import { environment } from './environments/environment';
+import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import {AngularFireModule} from '@angular/fire/compat';
+import { AngularFireStorageModule} from '@angular/fire/compat/storage';
+import { DemoHtmlComponent } from './demo.html/demo.html.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,14 +27,17 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     ModalComponent,
     LeftsidebarComponent,
     MiddlebarComponent,
-    RightsidebarComponent
+    RightsidebarComponent,
+    DemoHtmlComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireStorageModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

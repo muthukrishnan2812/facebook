@@ -179,9 +179,9 @@
         margin-left: 420px;
     }
     .postImage{
-        height: 526px;
-        width: 526px;
-        margin: 1rem;
+        height: 400px;
+        width: 100%;
+        // margin: 1rem;
     }
 }
 
@@ -218,9 +218,15 @@
         margin-left: 0;
 
     }
+    .postImage{
+        // height: 400px;
+        width: 80%;
+        // margin: 1rem;
+    }
+    
 
     .firstPost {
-        width: 90%;
+        width: 66%;
         margin: 0 auto;
         margin-left: 0;
         display: flex;
@@ -274,4 +280,21 @@
         }
     }
 
+
+}
+.card{
+    border: none;
+}
+.name {
+    margin-left: auto; /* Adjust as needed */
+}
+.preview{
+    width: 100px;
+    height: 100px;
+}
+.liked{
+    color: #2e81f4;
+}
+.liked:hover{
+    color: #2e81f4;
 }

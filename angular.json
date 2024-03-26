@@ -101,6 +101,23 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "facebook:build:production",
+              "serveTarget": "facebook:serve:production"
+            },
+            "development": {
+              "buildTarget": "facebook:build:development",
+              "serveTarget": "facebook:serve:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }

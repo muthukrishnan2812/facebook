@@ -1,21 +1,42 @@
-h1{
-    text-align: center;
-}
-img{
-    height: 40px;
-    width: 40px;
+// h1{
+//     text-align: center;
+// }
+.img{
+    height: 300px;
+    width: 30%;
     border-radius: 50%;
 }
-.post{
-    display: flex;
-    border: 1px solid gray;
-   justify-content: space-between;
-   padding: 10px;
-   margin: 10px;
-}
-input{
-    height: 200px;
-}
-form{
-    width: 100%;
+// .post{
+//     display: flex;
+//     border: 1px solid gray;
+//    justify-content: space-between;
+//    padding: 10px;
+//    margin: 10px;
+// }
+// input{
+//     height: 200px;
+// }
+// form{
+//     width: 100%;
+// }
+// i{
+//     cursor: pointer;
+// }
+// .postImg{
+//     width: 40px;
+//     height: 40px;
+//     border-radius: 50px;
+// }
+// .postImage{
+//     height: 526px;
+//     width: 526px;
+//     margin: 1rem;
+// }
+.card{
+    width: 30%;
+    margin: auto;
+    padding: auto;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+    font-weight: 500;
 }

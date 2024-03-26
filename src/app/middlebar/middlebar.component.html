@@ -1,9 +1,9 @@
 <div class="center">
     <div class="story">
         <div class="card-top my-3">
-            <img src="assets/images/status-1.png" alt="story post" class="img">
+            <img src="assets/images/muthu.jpg" alt="story post" class="img">
             <div>
-               <label for="imageInput"> <i class="bi bi-plus-circle itag"></i></label>
+                <label for="imageInput"> <i class="bi bi-plus-circle itag"></i></label>
                 <p class="label" style="margin-top: -48px;">Create story</p>
             </div>
         </div>
@@ -32,9 +32,9 @@
     <div class="story-2">
         <div class="story_update">
             <div class="d-flex">
-                <img src="assets/images/profile-pic.png" alt="" class="imgg">
-                <input type="text" class="form-control input" placeholder="what's on your mind, Muthu?" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal">
+                <img src="assets/images/muthu.jpg" alt="" class="imgg">
+                <input type="text" class="form-control input" placeholder="what's on your mind, Muthu?"
+                    data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <hr>
             </div>
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -47,7 +47,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="d-flex">
-                                <img src="assets/images/profile-pic.png" alt="" class="imgg">
+                                <img src="assets/images/muthu.jpg" alt="" class="imgg">
                                 <p class="my-1 mx-3">Muthu krishnan</p>
                             </div>
                             <input type="text" class="form-control my-3" placeholder="What's on your mind, Muthu?"
@@ -55,22 +55,27 @@
                             <div class="post">
                                 <p>Add to your post</p>
                                 <!-- Hidden file input -->
-                                <input type="file" id="imageInput" style="display: none;">
+                                <input type="file" accept=".png,.jpg" id="upload" style="display: none;"
+                                    (change)="onFileChange($event)" #fileInput>
                                 <input type="file" id="videoInput" style="display: none;" accept="video/*">
 
                                 <!-- Label styled as an icon -->
-                                <label for="imageInput">
+                                <label for="upload">
                                     <i class="bi bi-image text-success"></i>
+
                                 </label>
                                 <span><i class="bi bi-person text-primary"></i></span>
                                 <span><i class="bi bi-emoji-grin text-warning"></i></span>
                                 <span> <i class="bi bi-geo-alt-fill text-danger"></i></span>
                                 <span><i class="bi bi-file-earmark-gif text-success"></i></span>
                                 <span><i class="bi bi-three-dots"></i></span>
+                                <img [src]="imageUrl" alt="Preview Image" id="previewImage" style="display: none;"
+                                    class="preview"  *ngIf="imageUrl">
+
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <form (ngSubmit)="postData()">
+                            <form (ngSubmit)="addPost($event)">
                                 <button type="submit" class="btn btn-primary btn-size">Post</button>
                             </form>
                             <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
@@ -93,48 +98,51 @@
                         Feeling/activity</b></span>
             </div>
         </div>
-        <div class="firstPost my-5">
+        <div class="firstPost my-5 card" *ngFor="let post of posts | async">
             <div class="d-flex my-3 mx-3 userProfile">
 
-                <img src="assets/images/profile-pic.png" alt="" class="postImg">
+                <img src="assets/images/muthu.jpg" alt="profilepic" class="postImg">
                 <div class="mx-3">
-                    <h6 style="width: 100%;">Muthu krishnan</h6>
-                    <span>{{today | date }}</span>
+                    <h6>Muthu krishnan</h6>
+                    <span>{{formatTimestamp(post.payload.doc.data().createdAt)}}</span>
                 </div>
-                <div class="">
-                    <i class="bi bi-three-dots tex-dark i " style="font-size: 20px;"></i>
-                    <i class="bi bi-x-square text-dark i " style="font-size: 20px;" (click)="close()"></i>
+                <div class="name">
+                    <i class="bi bi-three-dots tex-dark i " style="font-size: 20px;" ></i>
+                    <i class="bi bi-x-square text-dark i " style="font-size: 20px;"(click)="deletePost(post.payload.doc.id)"></i>
                 </div>
             </div>
 
             <div>
-                <h5>{{ todo?.body }}</h5>
+                <!-- <h2>{{ post.payload.doc.id }}</h2> -->
+                <p>{{ post.payload.doc.data().body }}</p>
+                <img [src]="post.payload.doc.data().imageUrl" alt="Post Image" class="card-img">
             </div>
             <hr>
             <div style="justify-content: space-around;font-size: 15px;display: flex;">
-                <i class="bi bi-hand-thumbs-up i "> Like</i>
+                <i class="i" [ngClass]="liked ? 'bi bi-hand-thumbs-up-fill' : 'bi bi-hand-thumbs-up'" (click)="likeOrDislike()" [class.Liked]="liked"> Like{{ likes }}</i>
                 <i class="bi bi-chat i "> Comment</i>
                 <i class="bi bi-share i"> Share</i>
             </div>
             <hr>
         </div>
-        <div *ngFor="let todos of todo">
+        <!-- <div *ngFor="let todos of todo">
             <div class="firstPost my-3">
                 <div class="d-flex my-3 mx-3 userProfile">
-
-                    <img src="assets/images/profile-pic.png" alt="" class="postImg">
-                    <div class="mx-3">
-                        <h6>{{todos.title}}</h6>
-                        <span>{{today | date }}</span>
+                    <div class="col-10 col-sm-8 d-flex my-3">
+                        <img src="assets/images/profile-pic.png" alt="" class="postImg">
+                        <div class="mx-3">
+                            <h6>{{todos.title}}</h6>
+                            <span>{{today | date }}</span>
+                        </div>
                     </div>
-                    <div class="">
-                        <i class="bi bi-three-dots tex-dark i " style="font-size: 20px;"></i>
-                        <i class="bi bi-x-square text-dark i " style="font-size: 20px;"></i>
+                    <div class="col col-sm-4">
+                        <i class="bi bi-three-dots tex-dark i mx-3  " style="font-size: 20px;"></i>
+                        <i class="bi bi-x-square text-dark i mx-3" style="font-size: 20px;"></i>
                     </div>
                 </div>
 
                 <div>
-                    <h5>{{ todos.body }}</h5>
+                    <h5>{{ todos.title }}</h5>
                     <img src="https://source.unsplash.com/random/" alt="" class="postImage">
 
                 </div>
@@ -146,7 +154,7 @@
                 </div>
                 <hr>
             </div>
-        </div>
+        </div> -->
 
     </div>
 

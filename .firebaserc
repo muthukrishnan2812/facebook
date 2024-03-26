@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "fb-post-5f818": {
+      "hosting": {
+        "facebook": [
+          "fb-post-5f818"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "fb-post-5f818"
+  }
+}

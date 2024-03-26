@@ -1,11 +1,25 @@
-<!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Launch demo modal
 </button>
-<div>{{ todo?.body }}</div>
+<div *ngFor="let post of posts | async" class="card">
+    <!-- <h2>{{ post.payload.doc.id }}</h2> -->
+    <p>{{ post.payload.doc.data().body }}</p>
+    <img [src]="post.payload.doc.data().imageUrl" alt="Post Image" class="card-img">
+</div>
+
+<!-- modal.component.html -->
+
+<!-- <div>F
+    Display uploaded images
+    <div *ngFor="let imageUrl$ of imageUrls">
+        <img [src]="imageUrl$ | async" alt="Firebase Image">
+    </div>
+
+    File input for uploading images
+    <input type="file" (change)="onFileChange($event)">
+</div> -->
 
 
-<!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -15,13 +29,20 @@
             </div>
             <div class="modal-body">
                 <div class="d-flex">
-                    <img src="assets/images/profile-pic.png" alt="">
+                    <input type="file" accept=".png,.jpg" id="upload" style="display: none;"
+                        (change)="onFileChange($event)">
+                    <img src="assets/images/profile-pic.png" alt="" class="img">
                     <p class="my-1 mx-3">Muthu krishnan</p>
                 </div>
-                <input type="text" class="form-control my-3" placeholder="What's on your mind, Muthu?" [(ngModel)]="body" name="body">
+                <input type="text" class="form-control my-3" placeholder="What's on your mind, Muthu?"
+                    [(ngModel)]="body" name="body">
                 <div class="post">
                     <p>Add to your post</p>
-                    <i class="bi bi-image text-success"></i>
+                    <img src="" alt="Preview Image" id="previewImage" style="display: none;">
+
+                    <label for="upload">
+                        <i class="bi bi-image text-success"></i>
+                    </label>
                     <i class="bi bi-person text-primary"></i>
                     <i class="bi bi-emoji-grin text-warning"></i>
                     <i class="bi bi-geo-alt-fill text-danger"></i>
@@ -30,11 +51,12 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <form (ngSubmit)="postData()">
+                <form (ngSubmit)="uploadImage($event)">
                     <button type="submit" class="btn btn-primary">Post</button>
                 </form>
-                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
             </div>
+            <input type="file">
         </div>
     </div>
 </div>
+
