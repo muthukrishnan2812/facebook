@@ -10,7 +10,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 #firestore cloud storage
 ![Screenshot from 2024-03-26 09-33-31](https://github.com/muthukrishnan2812/facebook/assets/130547095/5da81493-95aa-49f2-ba8b-235cfebdd8cf)
 #new Post
-![Screenshot from 2024-03-26 09-33-31](https://github.com/muthukrishnan2812/facebook/assets/130547095/0476c71f-0906-4dce-939b-c0d722eb2fe4)
+![Screenshot from 2024-03-26 12-51-42](https://github.com/muthukrishnan2812/facebook/assets/130547095/c4657b7e-1a3b-40f1-a6cc-e4be555739cf)
 
 
 
