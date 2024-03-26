@@ -5,6 +5,13 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ![Screenshot from 2024-03-19 12-09-11](https://github.com/muthukrishnan2812/facebook/assets/130547095/4729d082-6a4a-4d10-a656-30e4f45b5b5d)
 #dashboard page
 ![Screenshot from 2024-03-19 12-09-32](https://github.com/muthukrishnan2812/facebook/assets/130547095/94808969-264e-4238-a4e7-9843497fa47f)
+#firebase imageStorage
+![Screenshot from 2024-03-26 09-33-18](https://github.com/muthukrishnan2812/facebook/assets/130547095/21eedc4c-c9dc-4994-9b2e-3de3f6644b00)
+#firestore cloud storage
+![Screenshot from 2024-03-26 09-33-31](https://github.com/muthukrishnan2812/facebook/assets/130547095/5da81493-95aa-49f2-ba8b-235cfebdd8cf)
+#new Post
+![Screenshot from 2024-03-26 12-51-42](https://github.com/muthukrishnan2812/facebook/assets/130547095/c4657b7e-1a3b-40f1-a6cc-e4be555739cf)
+
 
 
 
