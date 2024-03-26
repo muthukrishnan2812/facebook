@@ -129,7 +129,7 @@ export class MiddlebarComponent implements OnInit {
     }
   }
   getPost() {
-    return this.fire.collection('/notes').snapshotChanges();
+    return this.fire.collection('/notes',ref=>ref.orderBy('createdAt','desc')).snapshotChanges();
   }
   async onFileChange(event: any) {
     const file = event.target.files[0];
