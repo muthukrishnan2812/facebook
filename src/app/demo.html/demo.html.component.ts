@@ -26,4 +26,7 @@ export class DemoHtmlComponent {
     this.liked = !this.liked;
     this.likes += this.liked ? 1 : -1;
   }
+  command(){
+    
+  }
 }

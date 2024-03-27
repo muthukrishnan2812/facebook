@@ -3,6 +3,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs';
 interface Post {
   id: string; // Assuming the ID is a string
   body: string;
@@ -29,15 +30,19 @@ export class MiddlebarComponent implements OnInit {
   selectedFile: any
   reader: any
   liked: boolean = false;
+  postData: any
+  commandText: any
+  // liked:number=0
   likes: number = 0;
   clickCount: number = 0;
   clickTimeout: any;
   postId: any
+  selectedPostId:any
   postsCollection: AngularFirestoreCollection<Post>;
   poststore: Observable<Post[]>;
   constructor(private http: HttpClient, private fireStorage: AngularFireStorage, private fire: AngularFirestore) {
-    console.log('fire->',fire.collection('notes'));
-    
+    console.log('fire->', fire.collection('notes'));
+
     this.postsCollection = fire.collection<Post>('notes');
     this.poststore = this.postsCollection.valueChanges({ idField: 'id' });
   }
@@ -45,7 +50,6 @@ export class MiddlebarComponent implements OnInit {
     this.getData();
     this.getImage();
     this.posts = this.getPost();
-    this.onFileChange(event);
   }
 
 
@@ -128,7 +132,7 @@ export class MiddlebarComponent implements OnInit {
     }
   }
   getPost() {
-    return this.fire.collection('/notes',ref=>ref.orderBy('createdAt','desc')).snapshotChanges();
+    return this.fire.collection('/notes', ref => ref.orderBy('createdAt', 'desc')).snapshotChanges();
   }
   async onFileChange(event: any) {
     const file = event.target.files[0];
@@ -183,20 +187,48 @@ export class MiddlebarComponent implements OnInit {
   }
 
   //postLike
-  likeOrDislike(): void {
-    this.clickCount++;
-    clearTimeout(this.clickTimeout);
-    this.clickTimeout = setTimeout(() => {
-      if (this.clickCount === 1) {
-        this.toggleLike();
-      }
-      this.clickCount = 0;
-    }, 250); // Change this value according to your preference for the double-click delay
-  }
+  // Inside MiddlebarComponent class
 
-  toggleLike(): void {
-    this.liked = !this.liked;
-    this.likes += this.liked ? 1 : -1;
+  toggleLike(postId: string): void {
+    const postReff = this.fire.collection('notes').doc(postId);
+
+    postReff.get().subscribe(doc => {
+      if (doc.exists) {
+        const postData = doc.data() as { likes: number, liked: boolean };
+        console.log('like->', postData);
+
+        // Initialize likes count to 0 if it's NaN
+        if (isNaN(postData.likes)) {
+          postData.likes = 0;
+        }
+        // Increment or decrement likes count based on current like state
+        postData.likes += postData.likes ? -1 : 1;
+        console.log(postData.likes ? 'liked' : 'unliked');
+        // Update document in Firestore with updated likes count
+        postReff.update({ likes: postData.likes })
+          .then(() => console.log(postReff ? 'Post liked' : 'unliked successfully!'))
+          .catch(error => console.error('Error toggling like:', error));
+      } else {
+        console.warn('Post does not exist!');
+      }
+    });
   }
+  
+commandPost(postId: string): void {
+  const postReference = this.fire.collection('/notes').doc(postId);
+
+  postReference.update({
+      command: this.commandText // Assuming 'command' is a field in your document to store the command text
+  })
+  .then(() => {
+      console.log('Command added successfully!',this.commandText);
+      this.commandText = ''; // Clear the input field after adding command
+  })
+  .catch(error => {
+      console.error('Error adding command:', error);
+  });
+}
+
+
   @Output() closeClicked: EventEmitter<void> = new EventEmitter<void>();
 }

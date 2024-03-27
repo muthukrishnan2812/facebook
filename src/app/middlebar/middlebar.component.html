@@ -70,7 +70,7 @@
                                 <span><i class="bi bi-file-earmark-gif text-success"></i></span>
                                 <span><i class="bi bi-three-dots"></i></span>
                                 <img [src]="imageUrl" alt="Preview Image" id="previewImage" style="display: none;"
-                                    class="preview"  *ngIf="imageUrl">
+                                    class="preview" *ngIf="imageUrl">
 
                             </div>
                         </div>
@@ -107,8 +107,9 @@
                     <span>{{formatTimestamp(post.payload.doc.data().createdAt)}}</span>
                 </div>
                 <div class="name">
-                    <i class="bi bi-three-dots tex-dark i " style="font-size: 20px;" ></i>
-                    <i class="bi bi-x-square text-dark i " style="font-size: 20px;"(click)="deletePost(post.payload.doc.id)"></i>
+                    <i class="bi bi-three-dots tex-dark i " style="font-size: 20px;"></i>
+                    <i class="bi bi-x-square text-dark i " style="font-size: 20px;"
+                        (click)="deletePost(post.payload.doc.id)"></i>
                 </div>
             </div>
 
@@ -119,11 +120,18 @@
             </div>
             <hr>
             <div style="justify-content: space-around;font-size: 15px;display: flex;">
-                <i class="i" [ngClass]="liked ? 'bi bi-hand-thumbs-up-fill' : 'bi bi-hand-thumbs-up'" (click)="likeOrDislike()" [class.Liked]="liked"> Like{{ likes }}</i>
-                <i class="bi bi-chat i "> Comment</i>
+                <i class="i"
+                    [ngClass]="post.payload.doc.data().likes ? 'bi bi-hand-thumbs-up-fill' : 'bi bi-hand-thumbs-up'"
+                    (click)="toggleLike(post.payload.doc.id)"> Like {{ post.payload.doc.data().likes }}</i>
+                <i class="bi bi-chat i " data-bs-toggle="modal" data-bs-target="#commandModal"
+                    (click)="selectedPostId=post.payload.doc.id"> Comment</i>
                 <i class="bi bi-share i"> Share</i>
             </div>
             <hr>
+            <!-- <div class="table text-danger">{{post.payload.doc.data().command}}</div> -->
+            <ul class="list-group" *ngIf="post.payload.doc.data().command">
+                <li class="list-group-item "><strong>Muthukrishnan:</strong>&nbsp;&nbsp;{{post.payload.doc.data().command}}</li>
+            </ul>
         </div>
         <!-- <div *ngFor="let todos of todo">
             <div class="firstPost my-3">
@@ -155,6 +163,24 @@
                 <hr>
             </div>
         </div> -->
+        <div class="modal fade command" id="commandModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Command</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" class="form-control" [(ngModel)]="commandText">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary mx-auto"
+                            (click)="commandPost(selectedPostId)">command</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 
