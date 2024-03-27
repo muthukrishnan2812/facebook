@@ -45,7 +45,6 @@ export class MiddlebarComponent implements OnInit {
     this.getData();
     this.getImage();
     this.posts = this.getPost();
-    this.posts = this.posts.sort((a: any, b: any) => b.createdAt.toDate() - a.createdAt.toDate());
     this.onFileChange(event);
   }
 
