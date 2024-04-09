@@ -1,15 +1,22 @@
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Launch demo modal
-</button>
-<div *ngFor="let post of posts | async" class="card">
-    <!-- <h2>{{ post.payload.doc.id }}</h2> -->
-    <p>{{ post.payload.doc.data().body }}</p>
-    <img [src]="post.payload.doc.data().imageUrl" alt="Post Image" class="card-img">
-</div>
+<div [ngClass]="{'dark-theme': theme === 'dark', 'light-theme': theme === 'light'}">
+    <div class="form-check form-switch mx-4">
+        <input class="form-check-input p-2" type="checkbox" role="switch" id="flexSwitchCheckChecked"
+            (change)="toggleTheme($event)" [checked]="theme === 'dark'" />
+    </div>
 
-<!-- modal.component.html -->
 
-<!-- <div>F
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Launch demo modal
+    </button>
+    <div *ngFor="let post of posts | async" class="card">
+        <!-- <h2>{{ post.payload.doc.id }}</h2> -->
+        <p>{{ post.payload.doc.data().body }}</p>
+        <img [src]="post.payload.doc.data().imageUrl" alt="Post Image" class="card-img">
+    </div>
+
+    <!-- modal.component.html -->
+
+    <!-- <div>F
     Display uploaded images
     <div *ngFor="let imageUrl$ of imageUrls">
         <img [src]="imageUrl$ | async" alt="Firebase Image">
@@ -20,43 +27,57 @@
 </div> -->
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Create post</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="d-flex">
-                    <input type="file" accept=".png,.jpg" id="upload" style="display: none;"
-                        (change)="onFileChange($event)">
-                    <img src="assets/images/profile-pic.png" alt="" class="img">
-                    <p class="my-1 mx-3">Muthu krishnan</p>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Create post</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <input type="text" class="form-control my-3" placeholder="What's on your mind, Muthu?"
-                    [(ngModel)]="body" name="body">
-                <div class="post">
-                    <p>Add to your post</p>
-                    <img src="" alt="Preview Image" id="previewImage" style="display: none;">
+                <div class="modal-body">
+                    <div class="d-flex">
+                        <input type="file" accept=".png,.jpg" id="upload" style="display: none;"
+                            (change)="onFileChange($event)">
+                        <img src="assets/images/profile-pic.png" alt="" class="img">
+                        <p class="my-1 mx-3">Muthu krishnan</p>
+                    </div>
+                    <input type="text" class="form-control my-3" placeholder="What's on your mind, Muthu?"
+                        [(ngModel)]="body" name="body">
+                    <div class="post">
+                        <p>Add to your post</p>
+                        <img src="" alt="Preview Image" id="previewImage" style="display: none;">
 
-                    <label for="upload">
-                        <i class="bi bi-image text-success"></i>
-                    </label>
-                    <i class="bi bi-person text-primary"></i>
-                    <i class="bi bi-emoji-grin text-warning"></i>
-                    <i class="bi bi-geo-alt-fill text-danger"></i>
-                    <i class="bi bi-file-earmark-gif text-success"></i>
-                    <i class="bi bi-three-dots"></i>
+                        <label for="upload">
+                            <i class="bi bi-image text-success"></i>
+                        </label>
+                        <i class="bi bi-person text-primary"></i>
+                        <i class="bi bi-emoji-grin text-warning"></i>
+                        <i class="bi bi-geo-alt-fill text-danger"></i>
+                        <i class="bi bi-file-earmark-gif text-success"></i>
+                        <i class="bi bi-three-dots"></i>
+                    </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <form (ngSubmit)="uploadImage($event)">
+                <div class="modal-footer">
+                    <!-- <form (ngSubmit)="uploadImage($event)">
                     <button type="submit" class="btn btn-primary">Post</button>
-                </form>
+                </form> -->
+                </div>
+                <input type="file">
             </div>
-            <input type="file">
         </div>
     </div>
-</div>
 
+    <div *ngIf="combinedData.length > 0">
+        <h1>Posts</h1>
+        <ul>
+            <li *ngFor="let post of combinedData[0]">
+                <!-- Assuming 'post' is an object with properties like 'body', 'imageUrl', 'createdAt', etc. -->
+                <div>{{ post.body }}</div>
+                <div *ngFor="let imageUrl of post.imageUrl">
+                    <img [src]="imageUrl" alt="Image">
+                </div>
+                <!-- <div>Created At: {{ post.createdAt | date }}</div> -->
+            </li>
+        </ul>
+    </div>
+</div>

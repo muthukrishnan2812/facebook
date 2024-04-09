@@ -5,7 +5,6 @@ import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ModalComponent } from './modal/modal.component';
-import { DemoHtmlComponent } from './demo.html/demo.html.component';
 
 const routes: Routes = [
   // {
@@ -27,10 +26,6 @@ const routes: Routes = [
   {
     path:"modal",
     component:ModalComponent
-  },
-  {
-    path:"demo",
-    component:DemoHtmlComponent
   }
 ];
 

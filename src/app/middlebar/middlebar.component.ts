@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, OnDestroy, Inject, inject, DestroyRef } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { Observable } from 'rxjs';
+import { Observable, Subject, Subscription, catchError, combineLatest, filter, from, mergeMap, switchMap, takeUntil, tap, throwError } from 'rxjs';
 import { map } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 interface Post {
   id: string; // Assuming the ID is a string
   body: string;
@@ -15,60 +16,59 @@ interface Post {
   templateUrl: './middlebar.component.html',
   styleUrl: './middlebar.component.scss'
 })
-export class MiddlebarComponent implements OnInit {
+export class MiddlebarComponent implements OnInit,OnDestroy {
   body: any
-  todo: any
-  image: any
   title: string = ''
   data: any[] = []
-  isVisible: any
   today: any = new Date();
   imageUrl: string[] = []
-  posts: any
-  date: any
+  posts!: Observable<any[]>;
   createdAt: any
   selectedFile: any
   reader: any
   liked: boolean = false;
   postData: any
   commandText: any
-  // liked:number=0
   likes: number = 0;
-  clickCount: number = 0;
-  clickTimeout: any;
   postId: any
-  selectedPostId:any
-  postsCollection: AngularFirestoreCollection<Post>;
-  poststore: Observable<Post[]>;
+  selectedPostId: any
+  postsCollection: any
+  poststore: any[] = [];
+  combinedData:any[] =[]
+  takeDestroy = inject(DestroyRef)
+  private unSubscribe$:Subject<void> = new Subject<void>();
   constructor(private http: HttpClient, private fireStorage: AngularFireStorage, private fire: AngularFirestore) {
     console.log('fire->', fire.collection('notes'));
-
-    this.postsCollection = fire.collection<Post>('notes');
-    this.poststore = this.postsCollection.valueChanges({ idField: 'id' });
   }
   ngOnInit(): void {
-    this.getData();
-    this.getImage();
-    this.posts = this.getPost();
-  }
-
-
-  // postData(){
-  //   return this.http.post(`https://jsonplaceholder.typicode.com/posts/`,{body:this.body})
-  //   .subscribe(res=>{
-  //     console.log(res);
-  //     this.todo=res;
-  //     console.log(typeof res)
-  //     alert('data posted succesfully')
-  //   })
-  //  }
-  getData() {
-    return this.http.get(`https://jsonplaceholder.typicode.com/photos/`)
-      .subscribe(data => {
-        console.log(data);
-        this.todo = data;
+    this.posts = this.fire.collection('/notes', ref => ref.orderBy('createdAt', 'desc')).snapshotChanges();
+    this.postsCollection = this.fire.collection<Post>('notes');
+    this.poststore = this.postsCollection.valueChanges({ idField: 'id' });
+    const postsData$ = this.posts.pipe((takeUntilDestroyed(this.takeDestroy)),
+      map((x: any[]) => {
+        return x.map(y => {
+          const dt = y.payload.doc.data()
+          const id = y.payload.doc.id;
+          console.log('mapdata->', dt,'postid->',id);
+          return dt;
+        })
       })
+    )
+    const combined = combineLatest([this.poststore, postsData$])
+    combined.pipe(takeUntil(this.unSubscribe$))
+    .subscribe(([poststoreData,postsData=[]])=>{
+      console.log('1stpsd',poststoreData)
+      console.log('2ndpostsdata->',postsData);
+      this.combinedData = [poststoreData,postsData]
+    })
   }
+  ngOnDestroy(): void {
+    console.log('coimbined data destroyed');
+    this.takeDestroy.onDestroy;
+    console.log('unsubscribed data');
+  }
+
+
   formatTimestamp(timestamp: any) {
     if (timestamp) {
       const now = new Date();
@@ -92,21 +92,8 @@ export class MiddlebarComponent implements OnInit {
       return ''; // or any default value you prefer if timestamp is missing
     }
   }
-
-
-  getImage() {
-    return this.http.get(`https://source.unsplash.com/random/`)
-      .subscribe(data => {
-        console.log(data);
-        // this.image=data;
-      })
-  }
-  //  close(): void {
-  //   this.closeClicked.emit();
-  //   console.log('closebuttonclicked');
-  //   this.isVisible = true;
-  // }
-  addPost(event: any) {
+  //post store in firebase database
+  async addPost() {
     if (this.body.trim() !== '') {
       const previewImage = document.getElementById('previewImage') as HTMLImageElement;
       previewImage.style.display = 'none';
@@ -114,31 +101,22 @@ export class MiddlebarComponent implements OnInit {
         body: this.body,
         imageUrl: this.imageUrl,
         createdAt: new Date()
-        // You can add more properties here if needed
       };
-
-      this.fire.collection('/notes').add(post)
-        .then(() => {
-          console.log('Post added successfully!');
-          this.body = ''; // Clear the input field after adding post
-          this.imageUrl = [];
-          this.reader = '';
-        })
-        .catch(error => {
-          console.error('Error adding post:', error);
-        });
+      await this.fire.collection('/notes').add(post)
+      console.log('Post added successfully!');
+      this.body = ''; // Clear the input field after adding post
+      this.imageUrl = [];
+      this.reader = '';
+      console.warn('body is empty', this.body.trim == '');
     } else {
       console.warn('Body cannot be empty!');
     }
   }
-  getPost() {
-    return this.fire.collection('/notes', ref => ref.orderBy('createdAt', 'desc')).snapshotChanges();
-  }
+  //image store in firebase storage
   async onFileChange(event: any) {
     const file = event.target.files[0];
     if (file) {
       console.log(file);
-
       // Display preview image
       const reader = new FileReader();
       reader.onload = (e: any) => {
@@ -148,20 +126,16 @@ export class MiddlebarComponent implements OnInit {
         e.preventDefault();
       };
       reader.readAsDataURL(file);
-
       const path = `fbpost/${file.name}`;
       const uploadTask = this.fireStorage.upload(path, file);
-
       try {
         const snapshot = await uploadTask;
         const url = await snapshot.ref.getDownloadURL();
         console.log(url);
-
         // Ensure this.imageUrl is initialized as an array
         if (!Array.isArray(this.imageUrl)) {
           this.imageUrl = [];
         }
-
         this.imageUrl.push(url); // Store the URL in the array
         console.log(this.imageUrl);
       } catch (error) {
@@ -169,26 +143,26 @@ export class MiddlebarComponent implements OnInit {
       }
     }
   }
-  deletePost(postId: string,) {
-    // Reference to the post document in Firestore
+
+  //delete post in firebase database
+  async deletePost(postId: string) {
     const postRef = this.fire.collection('notes').doc(postId);
-    console.log(postRef);
-    // Delete the post document
-    postRef.delete()
+    await postRef.delete();
+    alert('post deleted succesfully');
+    console.log('post deleted succesfully', 'postid->', postId, 'postobj->', postRef);
+  }
 
-
-      .then(() => {
-        alert('post deleted successfully');
-        console.log('Post deleted successfully!');
-      })
-      .catch(error => {
-        console.error('Error deleting post:', error);
-      });
+  //command post in firebase posts
+  commandPost(postId: string): void {
+    const postReference = this.fire.collection('/notes').doc(postId);
+    postReference.update({
+      command: this.commandText
+    });
+    this.commandText = '';
   }
 
   //postLike
   // Inside MiddlebarComponent class
-
   toggleLike(postId: string): void {
     const postReff = this.fire.collection('notes').doc(postId);
 
@@ -213,22 +187,5 @@ export class MiddlebarComponent implements OnInit {
       }
     });
   }
-  
-commandPost(postId: string): void {
-  const postReference = this.fire.collection('/notes').doc(postId);
-
-  postReference.update({
-      command: this.commandText // Assuming 'command' is a field in your document to store the command text
-  })
-  .then(() => {
-      console.log('Command added successfully!',this.commandText);
-      this.commandText = ''; // Clear the input field after adding command
-  })
-  .catch(error => {
-      console.error('Error adding command:', error);
-  });
 }
 
-
-  @Output() closeClicked: EventEmitter<void> = new EventEmitter<void>();
-}

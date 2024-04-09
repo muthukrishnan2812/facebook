@@ -2,7 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-
+import { map,combineLatest,from, of } from 'rxjs';
+interface Post {
+  id: string; // Assuming the ID is a string
+  body: string;
+  imageUrl: string[];
+  createdAt: Date;
+}
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
@@ -13,78 +19,58 @@ export class ModalComponent implements OnInit {
   imageUrl: string[] = [];
   selectedFile: File | null = null;
   posts: any;
-
+  title: string = ''
+  data: any[] = []
+  today: any = new Date();
+  createdAt: any
+  reader: any
+  liked: boolean = false;
+  postData: any
+  commandText: any
+  likes: number = 0;
+  postId: any
+  selectedPostId: any
+  postsCollection: any
+  poststore: any[] = [];
+  combinedData:any[] =[]
   constructor(private http: HttpClient, private fireStorage: AngularFireStorage, private fire: AngularFirestore) {}
-
   ngOnInit(): void {
-    // No need to call onFileChange here
-    this.posts = this.getPost();
-  }
-
-  async onFileChange(event: any) {
-    const file = event.target.files?.[0];
-    if (file) {
-      console.log(file);
-
-      // Display preview image
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        const previewImage = document.getElementById('previewImage') as HTMLImageElement;
-        previewImage.src = e.target.result;
-        previewImage.style.display = 'block';
-      };
-      reader.readAsDataURL(file);
-
-      // Store the selected file for later use
-      this.selectedFile = file;
-    }
-    file.value = '';
-  }
-
-  async uploadImage(event:any) {
-    if (this.selectedFile) {
-      const path = `fbpost/${this.selectedFile.name}`;
-      const uploadTask = this.fireStorage.upload(path, this.selectedFile);
-
-      try {
-        const snapshot = await uploadTask;
-        const url = await snapshot.ref.getDownloadURL();
-        console.log(url);
-        this.imageUrl.push(url);
-        // Image upload successful, now add post
-        this.addPost();
-      } catch (error) {
-        console.error('Error uploading image:', error);
-      }
-    } else {
-      console.warn('No file selected.');
-    }
-    event.preventDefault();
-  }
-
-  addPost() {
-    if (this.body.trim() !== '') {
-      const post = {
-        body: this.body,
-        imageUrl: this.imageUrl
-        // You can add more properties here if needed
-      };
-
-      this.fire.collection('/notes').add(post)
-        .then(() => {
-          console.log('Post added successfully!');
-          this.body = ''; // Clear the input field after adding post
-          this.imageUrl = [];
+    this.posts = this.fire.collection('/notes', ref => ref.orderBy('createdAt', 'desc')).snapshotChanges();
+    this.postsCollection = this.fire.collection<Post>('notes');
+    this.poststore = this.postsCollection.valueChanges({ idField: 'id' });
+    const postsData = this.posts.pipe(
+      map((x: any[]) => {
+        return x.map(y => {
+          const dt = y.payload.doc.data()
+          const id = y.payload.doc.id;
+          console.log('mapdata->', dt,'postid->',id);
+          return dt;
         })
-        .catch(error => {
-          console.error('Error adding post:', error);
-        });
-    } else {
-      console.warn('Body cannot be empty!');
-    }
+      })
+    )
+    const combined = combineLatest([this.poststore, postsData]);
+    combined.subscribe(([poststoreData,postsData=[]])=>{
+      console.log('1stpsd',poststoreData)
+      console.log('2ndpostsdata->',postsData);
+      this.combinedData = [poststoreData,postsData]
+    });
+    this.demo();
   }
+ async onFileChange(event:any){
+ }
+  demo(){
+    const data = of ([1,2,3,4,5,6,7,8,9])
+    .subscribe({
+      next(response){
+        console.log(response);
+      }
+    })
+  }
+  theme: string = 'dark'; // Initialize theme to 'dark'
 
-  getPost() {
-    return this.fire.collection('/notes').snapshotChanges();
+  toggleTheme(event:any) {
+    this.theme = event.target.checked ? 'dark' : 'light'; // Toggle between 'dark' and 'light' based on checkbox state
+    console.log(this.theme);
+    
   }
 }

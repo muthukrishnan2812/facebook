@@ -75,8 +75,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <form (ngSubmit)="addPost($event)">
-                                <button type="submit" class="btn btn-primary btn-size">Post</button>
+                            <form (ngSubmit)="addPost()">
+                                <button type="submit" class="btn btn-primary btn-size" data-bs-dismiss="modal">Post</button>
                             </form>
                             <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
                         </div>
@@ -108,7 +108,7 @@
                 </div>
                 <div class="name">
                     <i class="bi bi-three-dots tex-dark i " style="font-size: 20px;"></i>
-                    <i class="bi bi-x-square text-dark i " style="font-size: 20px;"
+                    <i class="bi bi-x-square text-dark i | async" style="font-size: 20px;"
                         (click)="deletePost(post.payload.doc.id)"></i>
                 </div>
             </div>
@@ -133,36 +133,6 @@
                 <li class="list-group-item "><strong>Muthukrishnan:</strong>&nbsp;&nbsp;{{post.payload.doc.data().command}}</li>
             </ul>
         </div>
-        <!-- <div *ngFor="let todos of todo">
-            <div class="firstPost my-3">
-                <div class="d-flex my-3 mx-3 userProfile">
-                    <div class="col-10 col-sm-8 d-flex my-3">
-                        <img src="assets/images/profile-pic.png" alt="" class="postImg">
-                        <div class="mx-3">
-                            <h6>{{todos.title}}</h6>
-                            <span>{{today | date }}</span>
-                        </div>
-                    </div>
-                    <div class="col col-sm-4">
-                        <i class="bi bi-three-dots tex-dark i mx-3  " style="font-size: 20px;"></i>
-                        <i class="bi bi-x-square text-dark i mx-3" style="font-size: 20px;"></i>
-                    </div>
-                </div>
-
-                <div>
-                    <h5>{{ todos.title }}</h5>
-                    <img src="https://source.unsplash.com/random/" alt="" class="postImage">
-
-                </div>
-                <hr>
-                <div style="justify-content: space-around;font-size: 15px;display: flex;">
-                    <i class="bi bi-hand-thumbs-up i "> Like</i>
-                    <i class="bi bi-chat i "> Comment</i>
-                    <i class="bi bi-share i"> Share</i>
-                </div>
-                <hr>
-            </div>
-        </div> -->
         <div class="modal fade command" id="commandModal" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -176,7 +146,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary mx-auto"
-                            (click)="commandPost(selectedPostId)">command</button>
+                            (click)="commandPost(selectedPostId)" data-bs-dismiss="modal">command</button>
                     </div>
                 </div>
             </div>

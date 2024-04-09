@@ -1,1 +1,15 @@
-<p>register works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col bg-primary">
+            <div>
+                <img src="assets/images/facebook.png" alt="" class="img">
+            </div>
+        </div>
+        <div class="col-md-6 bg-dark">
+            <div class="form-control d-flex" (click)="signInWithGoogle()" id="google-btn">
+                <img src="assets/images/google.png" alt="" class="google" id="google-img">
+                <h5 class="mx-3" data-onsuccess="onSignIn">Sign in with Google</h5>
+            </div>
+        </div>
+    </div>
+</div>
